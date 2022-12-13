@@ -24,9 +24,9 @@ os.chdir('C:\\Users\\eocon\\OneDrive\\Documents\\MSBA\\Programming 2 - Data Infr
 
 s = pd.read_excel("social_media_usage.xlsx")
 
-s.head()
+#s.head()
 
-s.shape
+#s.shape
 
 
 # ***
@@ -40,10 +40,10 @@ def clean_sm(x):
     x = np.where(x == 1, 1, 0)
     return x
 
-df = pd.DataFrame({'A': [86, 75, 1],
-                   'B': [1, 30, 9]})
+# df = pd.DataFrame({'A': [86, 75, 1],
+#                    'B': [1, 30, 9]})
 
-print(clean_sm(df))
+#print(clean_sm(df))
 
 
 # ***
@@ -69,122 +69,122 @@ ss['age'] = np.where(ss['age'] <= 98, ss['age'], None)
 
 ss = ss.dropna()
 
-ss.head(10)
+#ss.head(10)
 
 
 # In[227]:
 
 
-## exploratory analysis
-ss['sm_li_cat'] = ss['sm_li'].astype('category')
+# ## exploratory analysis
+# ss['sm_li_cat'] = ss['sm_li'].astype('category')
 
-# income
-print(ss.groupby(['sm_li_cat'])['income'].mean())
+# # income
+# print(ss.groupby(['sm_li_cat'])['income'].mean())
 
-alt.Chart(ss).mark_area(
-    opacity=0.5,
-    interpolate='step'
-).encode(
-    alt.X('income', bin=alt.Bin(maxbins=10)),
-    alt.Y('count()', stack=None),
-    alt.Color('sm_li_cat')
-).properties(
-    title='Income Bracket Between Linkedin Users and Not'
-)
-
-
-# From the histogram above, we can see that the income distribuition for Linkedin users tends to be higher than non-users.
-
-# In[228]:
+# alt.Chart(ss).mark_area(
+#     opacity=0.5,
+#     interpolate='step'
+# ).encode(
+#     alt.X('income', bin=alt.Bin(maxbins=10)),
+#     alt.Y('count()', stack=None),
+#     alt.Color('sm_li_cat')
+# ).properties(
+#     title='Income Bracket Between Linkedin Users and Not'
+# )
 
 
-# educ2
+# # From the histogram above, we can see that the income distribuition for Linkedin users tends to be higher than non-users.
 
-alt.Chart(ss).mark_area(
-    opacity=0.5,
-    interpolate='step'
-).encode(
-    alt.X('educ2', bin=alt.Bin(maxbins=10)),
-    alt.Y('count()', stack=None),
-    alt.Color('sm_li_cat')
-).properties(
-    title='Education Level Between Linkedin Users and Not'
-)
+# # In[228]:
 
 
-# Similarily, linkedin users tend to be more educated than non-users. 
+# # educ2
 
-# In[230]:
-
-
-# par
-#alt.Chart(ss.groupby(["age", "marital"], as_index=False)["sm_li"].mean()).\
-#mark_circle().\
-#encode(x="age",
- #     y="sm_li",
- #     color=":N")
-
-print(ss.groupby(['sm_li_cat'])['par'].mean())
-
-
-# In[231]:
+# alt.Chart(ss).mark_area(
+#     opacity=0.5,
+#     interpolate='step'
+# ).encode(
+#     alt.X('educ2', bin=alt.Bin(maxbins=10)),
+#     alt.Y('count()', stack=None),
+#     alt.Color('sm_li_cat')
+# ).properties(
+#     title='Education Level Between Linkedin Users and Not'
+# )
 
 
-# marital
-print(ss.groupby(['sm_li_cat'])['marital'].mean())
+# # Similarily, linkedin users tend to be more educated than non-users. 
+
+# # In[230]:
 
 
-# Parent/Non-Parent and Marital Status do not seem to be helpful in predicting whether or not someone is a linkedin user. 
+# # par
+# #alt.Chart(ss.groupby(["age", "marital"], as_index=False)["sm_li"].mean()).\
+# #mark_circle().\
+# #encode(x="age",
+#  #     y="sm_li",
+#  #     color=":N")
 
-# In[243]:
-
-
-# gender
-ss['gender_cat'] = ss['gender'].astype('category')
-#alt.Chart(ss).mark_bar().encode(
- #   alt.X('count()'),
- #   alt.Y('gender_cat'),
- #   alt.Color('sm_li_cat')
-#).properties(
-#    title='Gender and Linkedin Usage'
-#)
+# print(ss.groupby(['sm_li_cat'])['par'].mean())
 
 
-alt.Chart(ss).transform_aggregate(
-    count='count()',
-    groupby=['sm_li_cat', 'gender_cat']
-).transform_joinaggregate(
-    total='sum(count)',
-    groupby=['gender_cat']  
-).transform_calculate(
-    frac=alt.datum.count / alt.datum.total
-).mark_bar().encode(
-    x="gender_cat:O",
-    y=alt.Y('count:Q', stack="normalize", axis=alt.Axis(title="Percent", format="%")),
-    color='sm_li_cat:N',
-    tooltip=[
-        alt.Tooltip('count:Q', title="Count"),
-        alt.Tooltip('frac:Q', title="Percentage", format='.0%')
-    ]
-)
+# # In[231]:
 
 
-# From the above figure, we can see that the proportion of males to females using Linkedin is not equal. In this dataset, 36% of the men are linkedin users compared to only 29% of the women (check out the tooltip). 
+# # marital
+# print(ss.groupby(['sm_li_cat'])['marital'].mean())
 
-# In[244]:
+
+# # Parent/Non-Parent and Marital Status do not seem to be helpful in predicting whether or not someone is a linkedin user. 
+
+# # In[243]:
 
 
-# age
-alt.Chart(ss).mark_area(
-    opacity=0.5,
-    interpolate='step'
-).encode(
-    alt.X('age', bin=alt.Bin(maxbins=10)),
-    alt.Y('count()', stack=None),
-    alt.Color('sm_li_cat')
-).properties(
-    title='Distribution of Age Between Linkedin Users and Not'
-)
+# # gender
+# ss['gender_cat'] = ss['gender'].astype('category')
+# #alt.Chart(ss).mark_bar().encode(
+#  #   alt.X('count()'),
+#  #   alt.Y('gender_cat'),
+#  #   alt.Color('sm_li_cat')
+# #).properties(
+# #    title='Gender and Linkedin Usage'
+# #)
+
+
+# alt.Chart(ss).transform_aggregate(
+#     count='count()',
+#     groupby=['sm_li_cat', 'gender_cat']
+# ).transform_joinaggregate(
+#     total='sum(count)',
+#     groupby=['gender_cat']  
+# ).transform_calculate(
+#     frac=alt.datum.count / alt.datum.total
+# ).mark_bar().encode(
+#     x="gender_cat:O",
+#     y=alt.Y('count:Q', stack="normalize", axis=alt.Axis(title="Percent", format="%")),
+#     color='sm_li_cat:N',
+#     tooltip=[
+#         alt.Tooltip('count:Q', title="Count"),
+#         alt.Tooltip('frac:Q', title="Percentage", format='.0%')
+#     ]
+# )
+
+
+# # From the above figure, we can see that the proportion of males to females using Linkedin is not equal. In this dataset, 36% of the men are linkedin users compared to only 29% of the women (check out the tooltip). 
+
+# # In[244]:
+
+
+# # age
+# alt.Chart(ss).mark_area(
+#     opacity=0.5,
+#     interpolate='step'
+# ).encode(
+#     alt.X('age', bin=alt.Bin(maxbins=10)),
+#     alt.Y('count()', stack=None),
+#     alt.Color('sm_li_cat')
+# ).properties(
+#     title='Distribution of Age Between Linkedin Users and Not'
+# )
 
 
 # The distribution of Linkedin users is narrower than non-users. Those who use Linkedin tend to be younger than those who do not. 
@@ -197,7 +197,7 @@ alt.Chart(ss).mark_area(
 
 
 y = ss['sm_li']
-x = ss[['income', 'educ2', 'par', 'marital', 'gender', 'age']]
+x = ss[['income','educ2','par','marital','gender','age']]
 
 
 # ***
@@ -247,7 +247,7 @@ y_pred = lr.predict(x_test)
 
 # confusion matrix
 cm = confusion_matrix(y_test, y_pred)
-print(cm)
+#print(cm)
 
 
 # From the confusion matrix above, we can see that we correctly predicted that 109 individuals were not linkedin users while 20 of the individuals who we predicted were not linkedin users actually were. Of the 120 individuals who we predicted were linkedin users, 57 of them were not and 63 of them were. In other words, our model made the correct predictions for 172 individuals and made an incorrect prediction 77 times.
@@ -259,9 +259,9 @@ print(cm)
 # In[209]:
 
 
-pd.DataFrame(confusion_matrix(y_test, y_pred),
-            columns=["Predicted negative", "Predicted positive"],
-            index=["Actual negative","Actual positive"]).style.background_gradient(cmap="PuBu")
+# pd.DataFrame(confusion_matrix(y_test, y_pred),
+#             columns=["Predicted negative", "Predicted positive"],
+#             index=["Actual negative","Actual positive"]).style.background_gradient(cmap="PuBu")
 
 
 # ***
@@ -271,18 +271,18 @@ pd.DataFrame(confusion_matrix(y_test, y_pred),
 # In[188]:
 
 
-# recall
-#63/(63+20)
-rec = cm[1,[1]]/(cm[1,[1]]+cm[1,[0]])
-print(f"Recall: {rec}")
+# # recall
+# #63/(63+20)
+# rec = cm[1,[1]]/(cm[1,[1]]+cm[1,[0]])
+# print(f"Recall: {rec}")
 
-# precision
-pre = cm[1,[1]]/(cm[1,[1]]+cm[0,[1]])
-print(f"Precision: {pre}")
+# # precision
+# pre = cm[1,[1]]/(cm[1,[1]]+cm[0,[1]])
+# print(f"Precision: {pre}")
 
-# F1 score
-f1 = 2*((pre*rec)/(pre+rec))
-print(f"F1 score: {f1}")
+# # F1 score
+# f1 = 2*((pre*rec)/(pre+rec))
+# print(f"F1 score: {f1}")
 
 
 # 1. Recall: The higher the recall, the lower the chance of missing positive cases. This evaluation metric would likely be prioritized in a situation where its important that a life-threatening malfunction in a product is caught before the product is approved, such as car manufacturing. 
@@ -296,32 +296,32 @@ print(f"F1 score: {f1}")
 # In[189]:
 
 
-print(classification_report(y_test, y_pred))
+#print(classification_report(y_test, y_pred))
 
 
 # ***
 
 # #### Q10: Use the model to make predictions. For instance, what is the probability that a high income (e.g. income=8), with a high level of education (e.g. 7), non-parent who is married female and 42 years old uses LinkedIn? How does the probability change if another person is 82 years old, but otherwise the same?
 
-# In[192]:
+# # In[192]:
 
 
-newdata = pd.DataFrame({
-    'income': [8, 8],
-    'educ2': [7, 7],
-    'par': [2, 2],
-    'marital': [1, 1],
-    'gender': [2, 2],
-    'age': [42, 82]
-})
-newdata
+# newdata = pd.DataFrame({
+#     'income': [8, 8],
+#     'educ2': [7, 7],
+#     'par': [2, 2],
+#     'marital': [1, 1],
+#     'gender': [2, 2],
+#     'age': [42, 82]
+# })
+# newdata
 
 
-# In[193]:
+# # In[193]:
 
 
-newdata["prediction_linkedin_user"] = lr.predict(newdata)
-newdata
+# newdata["prediction_linkedin_user"] = lr.predict(newdata)
+# newdata
 
 
 # ***
@@ -332,11 +332,98 @@ newdata
 
 import streamlit as st
 
-st.header("##Enter your information below to see if the model predicts that you are a Linkedin user!")
+st.title('Can I predict if _you_ are a Linkedin user?')
+st.subheader("Enter your information below to see if the model predicts that you are a Linkedin user!")
 
 
+user_age = st.slider("How old are you?", min_value=5, max_value=95,value = 50, step=1)
+user_gender = st.selectbox("What is your sex?",options=['Female', 'Male'])
+user_married = st.selectbox("What is your marital status?",options=['Married', 'Living with a partner', 'Divorced', 'Separated', 'Widowed', 'Never been married'])
+user_parent = st.selectbox("Do you have any kids?",options=['Parent', 'Non-Parent'])
+user_educ = st.selectbox("What is your highest level of education completed?", options=['Less than High School', 'High School incomplete', 'High School diploma', 'Some College', 'Two-Year College Completed', 'Four-Year College Completed', 'Some Graduate School', 'Postgraduate or Professional degree recieved'])
+user_income = st.selectbox('What is your household income?', options=['Less than 10,000', '10,000 to under 20,000', '20,000 to under 30,000', '30,000 to under 40,000','40,000 to under 50,000', '50,000 to under 60,000', '70,000 to under 100,000', '100,000 to under 150,000','150,000+'])
+
+if user_gender == 'Female':
+    user_gender = 2
+else:
+    user_gender = 1
+
+if user_married == 'Married':
+    user_married = 1
+elif user_married == 'Living with a partner':
+    user_married = 2
+elif user_married == 'Divorced':
+    user_married = 3
+elif user_married == 'Separated':
+    user_married = 4
+elif user_married == 'Widowed':
+    user_married = 5
+else: user_married = 6
+
+if user_parent == 'Parent':
+    user_parent = 1
+else: user_parent = 2
+
+if user_educ == 'Less than High School':
+    user_educ = 1
+elif user_educ == 'High School incomplete':
+    user_educ = 2
+elif user_educ == 'High School diploma':
+    user_educ = 3
+elif user_educ == 'Some College':
+    user_educ = 4
+elif user_educ == 'Two-Year College Completed': 
+    user_educ = 5
+elif user_educ == 'Four-Year College Completed':
+    user_educ = 6
+elif user_educ == 'Some Graduate School':
+    user_educ = 7
+else: user_educ = 8
+
+if user_income == 'Less than 10,000':
+    user_income = 1
+elif user_income == '10,000 to under 20,000':
+    user_income = 2
+elif user_income == '20,000 to under 30,000':
+    user_income = 3
+elif user_income == '30,000 to under 40,000':
+    user_income = 4
+elif user_income == '40,000 to under 50,000': 
+    user_income = 5
+elif user_income == '50,000 to under 60,000':
+    user_income = 6
+elif user_income == '70,000 to under 100,000':
+    user_income = 7
+elif user_income == '100,000 to under 150,000':
+    user_income = 8
+else: user_income = 9
 
 
+# user = pd.DataFrame({
+#     'income': [user_income],
+#     'educ2': [user_educ],
+#     'par': [user_parent],
+#     'marital': [user_married],
+#     'gender': [user_gender],
+#     'age': [user_age]
+# })
 
+user = [user_income,user_educ,user_parent,user_married,user_gender,user_age]
+# st.write(user)
 
+predicted_class = lr.predict([user])
+
+probs = lr.predict_proba([user])
+
+probs = probs[0][1]*100
+
+if predicted_class > 0:
+    label= "I predict that you are a Linkedin user 🔥! \n(You should connect with me!)"
+else:
+    label= "I predict that you are not a Linkedin user 👀! \n(but you definitely should make an account!)"
+
+if st.button('Reveal Your Results!'):
+    st.subheader(label)
+    st.caption(f'Based on your answers above there is a **{probs:.2f}%** probability that you are a Linkedin user.')
+    
 
