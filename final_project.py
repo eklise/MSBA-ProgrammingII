@@ -19,8 +19,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 
-os.getcwd()
-os.chdir('C:\\Users\\eocon\\OneDrive\\Documents\\MSBA\\Programming 2 - Data Infrastructure')
+# os.getcwd()
+# os.chdir('C:\\Users\\eocon\\OneDrive\\Documents\\MSBA\\Programming 2 - Data Infrastructure')
 
 s = pd.read_excel("social_media_usage.xlsx")
 
